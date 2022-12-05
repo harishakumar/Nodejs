@@ -141,4 +141,12 @@ app.delete('/users/:userID', (req, res) => {
   }
 });
 
+app.get('/cred', (res, res) => {
+  res.cred
+})
+
+app.post('/creds', (res, res) => {
+  const user = { username: req.body.name, passsword: req.body.password}
+})
+
 app.listen(port);
