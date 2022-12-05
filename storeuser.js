@@ -26,32 +26,6 @@ const users = [
   },
 ];
 
-app.post('/create', (req, res) => {
-  if (!Object.keys(req.body).length) {
-    return res.status(400).json({
-      message: 'Request body cannot be empty',
-    });
-  }
-  const { name, age, place } = req.body;
-  const newUser = {
-    id: users.length + 1,
-    name,
-    age,
-    place,
-
-  };
-  try {
-    users.push(newUser);
-    res.status(201).json({
-      message: 'Successfully created a new user',
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: 'Failed to create user',
-    });
-  }
-});
-
 app.get('/users', (req, res) => {
   try {
     res.status(200).json({ users });
@@ -81,6 +55,33 @@ app.get('/users/:userID', (req, res) => {
   }
 });
 
+
+app.post('/create', (req, res) => {
+  if (!Object.keys(req.body).length) {
+    return res.status(400).json({
+      message: 'Request body cannot be empty',
+    });
+  }
+  const { name, age, place } = req.body;
+  const newUser = {
+    id: users.length + 1,
+    name,
+    age,
+    place,
+
+  };
+  try {
+    users.push(newUser);
+    res.status(201).json({
+      message: 'Successfully created a new user',
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Failed to create user',
+    });
+  }
+});
+
 app.put('/users/:userID', (req, res) => {
   try {
     const id = parseInt(req.params.userID);
@@ -104,6 +105,21 @@ app.put('/users/:userID', (req, res) => {
   }
 });
 
+app.delete('/users', (req, res) => {
+  try {
+    users.splice(0, users.length);
+    res.status(200).json({
+      message: 'Successfully deleted all users',
+      users,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Failed to delete users',
+      x,
+    });
+  }
+});
+
 app.delete('/users/:userID', (req, res) => {
   try {
     const id = req.params.userID;
@@ -121,21 +137,6 @@ app.delete('/users/:userID', (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: 'Failed to delete user',
-    });
-  }
-});
-
-app.delete('/users', (req, res) => {
-  try {
-    users.splice(0, users.length);
-    res.status(200).json({
-      message: 'Successfully deleted all users',
-      users,
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: 'Failed to delete users',
-      x,
     });
   }
 });
